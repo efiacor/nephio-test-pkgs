@@ -11,7 +11,7 @@ image:
   tag: ""
 
 nameOverride: ""
-fullnameOverride: ""
+fullnameOverride: "super-hello-world"
 
 serviceAccount:
   # Specifies whether a service account should be created
