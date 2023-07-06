@@ -1,68 +1,7 @@
-
 apiVersion: v1
 kind: Namespace
 metadata:
   name: flux-system
----
-# Source: flux2/templates/pre-install-job-serviceaccount.yaml
-apiVersion: v1
-kind: ServiceAccount
-metadata:
-  labels:
-    app.kubernetes.io/instance: "default"
-    app.kubernetes.io/managed-by: "Helm"
-    app.kubernetes.io/version: "2.0.0"
-    app.kubernetes.io/part-of: flux
-    helm.sh/chart: flux2-2.9.0
-  name: "my-flux2-flux-check"
-  annotations: 
-    "helm.sh/hook": pre-install
-    "helm.sh/hook-weight": "-10"
-    "helm.sh/hook-delete-policy": before-hook-creation,hook-succeeded
----
-# Source: flux2/templates/pre-install-job.yaml
-apiVersion: batch/v1
-kind: Job
-metadata:
-  name: "my-flux2-flux-check"
-  labels:
-    app.kubernetes.io/instance: "default"
-    app.kubernetes.io/managed-by: "Helm"
-    app.kubernetes.io/version: "2.0.0"
-    app.kubernetes.io/part-of: flux
-    helm.sh/chart: flux2-2.9.0
-  annotations:
-    "helm.sh/hook": pre-install
-    "helm.sh/hook-weight": "-5"
-    "helm.sh/hook-delete-policy": before-hook-creation,hook-succeeded
-spec:
-  backoffLimit: 1
-  template:
-    metadata:
-      name: "my-flux2"
-      labels:
-        app.kubernetes.io/instance: "default"
-        app.kubernetes.io/managed-by: "Helm"
-        app.kubernetes.io/version: "2.0.0"
-        app.kubernetes.io/part-of: flux
-        helm.sh/chart: "flux2-2.9.0"
-    spec:
-      restartPolicy: Never
-      serviceAccountName: "my-flux2-flux-check"
-      automountServiceAccountToken: true
-      containers:
-      - name: flux-cli
-        image: ghcr.io/fluxcd/flux-cli:v2.0.0
-        command: ["/usr/local/bin/flux", "check",  "--pre", "--namespace", default]
-        securityContext:
-          allowPrivilegeEscalation: false
-          capabilities:
-            drop:
-            - ALL
-          readOnlyRootFilesystem: true
-          runAsNonRoot: true
-          seccompProfile:
-            type: RuntimeDefault
 ---
 # Source: flux2/templates/policies.yaml
 apiVersion: networking.k8s.io/v1
@@ -70,11 +9,10 @@ kind: NetworkPolicy
 metadata:
   labels:
     app.kubernetes.io/instance: "default"
-    app.kubernetes.io/managed-by: "Helm"
     app.kubernetes.io/version: "2.0.0"
     app.kubernetes.io/part-of: flux
-    helm.sh/chart: flux2-2.9.0
   name: allow-egress
+  namespace: flux-system
 spec:
   egress:
   - {}
@@ -92,11 +30,10 @@ kind: NetworkPolicy
 metadata:
   labels:
     app.kubernetes.io/instance: "default"
-    app.kubernetes.io/managed-by: "Helm"
     app.kubernetes.io/version: "2.0.0"
     app.kubernetes.io/part-of: flux
-    helm.sh/chart: flux2-2.9.0
   name: allow-scraping
+  namespace: flux-system
 spec:
   ingress:
   - from:
@@ -114,11 +51,10 @@ kind: NetworkPolicy
 metadata:
   labels:
     app.kubernetes.io/instance: "default"
-    app.kubernetes.io/managed-by: "Helm"
     app.kubernetes.io/version: "2.0.0"
     app.kubernetes.io/part-of: flux
-    helm.sh/chart: flux2-2.9.0
   name: allow-webhooks
+  namespace: flux-system
 spec:
   ingress:
   - from:
@@ -135,11 +71,10 @@ kind: ServiceAccount
 metadata:
   labels:
     app.kubernetes.io/instance: "default"
-    app.kubernetes.io/managed-by: "Helm"
     app.kubernetes.io/version: "2.0.0"
     app.kubernetes.io/part-of: flux
-    helm.sh/chart: flux2-2.9.0
   name: helm-controller
+  namespace: flux-system
 ---
 # Source: flux2/templates/source-controller-serviceaccount.yaml
 apiVersion: v1
@@ -147,11 +82,10 @@ kind: ServiceAccount
 metadata:
   labels:
     app.kubernetes.io/instance: "default"
-    app.kubernetes.io/managed-by: "Helm"
     app.kubernetes.io/version: "2.0.0"
     app.kubernetes.io/part-of: flux
-    helm.sh/chart: flux2-2.9.0
   name: source-controller
+  namespace: flux-system
 ---
 # Source: flux2/templates/helm-controller.crds.yaml
 apiVersion: apiextensions.k8s.io/v1
@@ -162,10 +96,8 @@ metadata:
   creationTimestamp: null
   labels:
     app.kubernetes.io/instance: 'default'
-    app.kubernetes.io/managed-by: 'Helm'
     app.kubernetes.io/part-of: flux
     app.kubernetes.io/version: '2.0.0'
-    helm.sh/chart: 'flux2-2.9.0'
   name: helmreleases.helm.toolkit.fluxcd.io
 spec:
   group: helm.toolkit.fluxcd.io
@@ -1092,10 +1024,8 @@ metadata:
   creationTimestamp: null
   labels:
     app.kubernetes.io/instance: 'default'
-    app.kubernetes.io/managed-by: 'Helm'
     app.kubernetes.io/part-of: flux
     app.kubernetes.io/version: '2.0.0'
-    helm.sh/chart: 'flux2-2.9.0'
   name: buckets.source.toolkit.fluxcd.io
 spec:
   group: source.toolkit.fluxcd.io
@@ -1611,10 +1541,8 @@ metadata:
   creationTimestamp: null
   labels:
     app.kubernetes.io/instance: 'default'
-    app.kubernetes.io/managed-by: 'Helm'
     app.kubernetes.io/part-of: flux
     app.kubernetes.io/version: '2.0.0'
-    helm.sh/chart: 'flux2-2.9.0'
   name: gitrepositories.source.toolkit.fluxcd.io
 spec:
   group: source.toolkit.fluxcd.io
@@ -2794,10 +2722,8 @@ metadata:
   creationTimestamp: null
   labels:
     app.kubernetes.io/instance: 'default'
-    app.kubernetes.io/managed-by: 'Helm'
     app.kubernetes.io/part-of: flux
     app.kubernetes.io/version: '2.0.0'
-    helm.sh/chart: 'flux2-2.9.0'
   name: helmcharts.source.toolkit.fluxcd.io
 spec:
   group: source.toolkit.fluxcd.io
@@ -3392,10 +3318,8 @@ metadata:
   creationTimestamp: null
   labels:
     app.kubernetes.io/instance: 'default'
-    app.kubernetes.io/managed-by: 'Helm'
     app.kubernetes.io/part-of: flux
     app.kubernetes.io/version: '2.0.0'
-    helm.sh/chart: 'flux2-2.9.0'
   name: helmrepositories.source.toolkit.fluxcd.io
 spec:
   group: source.toolkit.fluxcd.io
@@ -3899,10 +3823,8 @@ metadata:
   creationTimestamp: null
   labels:
     app.kubernetes.io/instance: 'default'
-    app.kubernetes.io/managed-by: 'Helm'
     app.kubernetes.io/part-of: flux
     app.kubernetes.io/version: '2.0.0'
-    helm.sh/chart: 'flux2-2.9.0'
   name: ocirepositories.source.toolkit.fluxcd.io
 spec:
   group: source.toolkit.fluxcd.io
@@ -4306,10 +4228,8 @@ metadata:
   name: crd-controller
   labels:
     app.kubernetes.io/instance: "default"
-    app.kubernetes.io/managed-by: "Helm"
     app.kubernetes.io/version: "2.0.0"
     app.kubernetes.io/part-of: flux
-    helm.sh/chart: flux2-2.9.0
 rules:
 - apiGroups: ['source.toolkit.fluxcd.io']
   resources: ['*']
@@ -4384,10 +4304,8 @@ kind: ClusterRoleBinding
 metadata:
   labels:
     app.kubernetes.io/instance: "default"
-    app.kubernetes.io/managed-by: "Helm"
     app.kubernetes.io/version: "2.0.0"
     app.kubernetes.io/part-of: flux
-    helm.sh/chart: flux2-2.9.0
   name: cluster-reconciler
 roleRef:
   apiGroup: rbac.authorization.k8s.io
@@ -4408,10 +4326,8 @@ metadata:
   name: crd-controller
   labels:
     app.kubernetes.io/instance: "default"
-    app.kubernetes.io/managed-by: "Helm"
     app.kubernetes.io/version: "2.0.0"
     app.kubernetes.io/part-of: flux
-    helm.sh/chart: flux2-2.9.0
 roleRef:
   apiGroup: rbac.authorization.k8s.io
   kind: ClusterRole
@@ -4442,12 +4358,11 @@ kind: Service
 metadata:
   labels:
     app.kubernetes.io/instance: "default"
-    app.kubernetes.io/managed-by: "Helm"
     app.kubernetes.io/version: "2.0.0"
     app.kubernetes.io/part-of: flux
-    helm.sh/chart: flux2-2.9.0
     control-plane: controller
   name: source-controller
+  namespace: flux-system
 spec:
   ports:
   - name: http
@@ -4464,12 +4379,11 @@ kind: Deployment
 metadata:
   labels:
     app.kubernetes.io/instance: "default"
-    app.kubernetes.io/managed-by: "Helm"
     app.kubernetes.io/version: "2.0.0"
     app.kubernetes.io/part-of: flux
-    helm.sh/chart: flux2-2.9.0
     control-plane: controller
   name: helm-controller
+  namespace: flux-system
 spec:
   replicas: 1
   selector:
@@ -4542,12 +4456,11 @@ kind: Deployment
 metadata:
   labels:
     app.kubernetes.io/instance: "default"
-    app.kubernetes.io/managed-by: "Helm"
     app.kubernetes.io/version: "2.0.0"
     app.kubernetes.io/part-of: flux
-    helm.sh/chart: flux2-2.9.0
     control-plane: controller
   name: source-controller
+  namespace: flux-system
 spec:
   replicas: 1
   selector:
