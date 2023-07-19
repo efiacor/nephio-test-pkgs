@@ -1,0 +1,9 @@
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: setters-cm
+data:
+  gitrepoName: test-gitrepo
+  chartName: hello-world
+  namespace: hello
+  replicas: "4"
