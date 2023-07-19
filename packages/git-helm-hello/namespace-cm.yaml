@@ -1,6 +1,0 @@
-apiVersion: v1
-kind: ConfigMap
-metadata:
-  name: namespace-cm
-data:
-  namespace: example-ns # kpt-set: ${namespace}
