@@ -26,7 +26,6 @@ data:
         gatewayIP: 10.100.50.238
         excludeIP: 10.100.50.238
 
-
     projectName: ueransim
 
     initcontainers:
