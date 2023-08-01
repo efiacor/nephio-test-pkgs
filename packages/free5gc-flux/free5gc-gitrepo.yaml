@@ -1,0 +1,15 @@
+apiVersion: source.toolkit.fluxcd.io/v1
+kind: GitRepository
+metadata:
+  name: free5gc-gitrepo
+  namespace: default
+spec:
+  interval: 10s
+  url: https://github.com/efiacor/free5gc
+  ref:
+    branch: main
+  ignore: |
+    # exclude all
+    /*
+    # include charts dir
+    !/charts
