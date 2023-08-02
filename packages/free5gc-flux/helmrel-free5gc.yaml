@@ -15,7 +15,7 @@ spec:
         namespace: flux-system
       reconcileStrategy: Revision
       interval: 1m
-  targetNamespace: test
+  targetNamespace: demo
   valuesFrom:
   - kind: ConfigMap
     name: 5gc-values
