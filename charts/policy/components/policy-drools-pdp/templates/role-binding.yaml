@@ -22,7 +22,7 @@ apiVersion: rbac.authorization.k8s.io/v1
 kind: RoleBinding
 metadata:
   name: {{ .Chart.Name }}-read
-  namespace: onap
+  namespace: acm
 subjects:
   - kind: ServiceAccount
     name: {{ .Chart.Name }}-read

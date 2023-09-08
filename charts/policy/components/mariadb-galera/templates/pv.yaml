@@ -18,7 +18,7 @@ kind: PersistentVolume
 apiVersion: v1
 metadata:
   name: {{ .Chart.Name }}--0
-  namespace: onap
+  namespace: acm
   labels:
     app.kubernetes.io/name: {{ .Chart.Name }}
     helm.sh/chart: {{ .Chart.Name }}-{{ .Chart.Version | replace "+" "_" }}
@@ -40,7 +40,7 @@ kind: PersistentVolume
 apiVersion: v1
 metadata:
   name: {{ .Chart.Name }}--1
-  namespace: onap
+  namespace: acm
   labels:
     app.kubernetes.io/name: {{ .Chart.Name }}
     helm.sh/chart: {{ .Chart.Name }}-{{ .Chart.Version | replace "+" "_" }}
@@ -62,7 +62,7 @@ kind: PersistentVolume
 apiVersion: v1
 metadata:
   name: {{ .Chart.Name }}--2
-  namespace: onap
+  namespace: acm
   labels:
     app.kubernetes.io/name: {{ .Chart.Name }}
 

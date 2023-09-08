@@ -1,7 +1,7 @@
 kind: ConfigMap
 metadata:
   name: policy-acm-values
-  namespace: demo
+  namespace: acm
 apiVersion: v1
 data:
   values.yaml: |+
