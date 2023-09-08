@@ -19,7 +19,7 @@ apiVersion: batch/v1
 kind: Job
 metadata:
   name: policy-galera-init
-  namespace: onap
+  namespace: acm
   labels:
     app: policy-galera-init
 spec:
@@ -99,7 +99,7 @@ apiVersion: batch/v1
 kind: Job
 metadata:
   name: policy-galera-config
-  namespace: onap
+  namespace: acm
   labels:
     app: policy-galera-config
 spec:

@@ -33,5 +33,5 @@ roleRef:
 subjects:
   - kind: ServiceAccount
     name: {{ .Chart.Name }}-read
-    namespace: onap
+    namespace: acm
 

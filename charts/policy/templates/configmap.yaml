@@ -18,7 +18,7 @@ apiVersion: v1
 kind: ConfigMap
 metadata:
   name: {{ .Chart.Name }}-db-configmap
-  namespace: onap
+  namespace: acm
   labels:
     app: policy
     chart: {{ .Chart.Name }}-{{ .Chart.Version | replace "+" "_" }}
