@@ -1,0 +1,8 @@
+apiVersion: kpt.dev/v1
+kind: Kptfile
+metadata:
+  name: argo-test
+  annotations:
+    config.kubernetes.io/local-config: "true"
+info:
+  description: simple argo-test package
