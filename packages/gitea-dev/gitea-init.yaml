@@ -3,6 +3,7 @@ apiVersion: v1
 kind: Secret
 metadata:
   name: gitea-init
+  namespace: gitea
   labels:
     app: gitea
     app.kubernetes.io/name: gitea
