@@ -91,7 +91,7 @@ spec:
               memory: 128Mi
         - name: configure-gitea
           image: "gitea/gitea:1.21.4-rootless"
-          command: ["/usr/sbin/config_environment.sh"]
+          command: ["/usr/sbin/configure_gitea.sh"]
           imagePullPolicy: IfNotPresent
           securityContext:
             runAsUser: 1000
