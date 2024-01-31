@@ -105,6 +105,8 @@ spec:
                 secretKeyRef:
                   name: git-user-secret
                   key: password
+            - name: GITEA_ADMIN_EMAIL
+              value: nephio@nephio.org
           volumeMounts:
             - name: init
               mountPath: /usr/sbin
