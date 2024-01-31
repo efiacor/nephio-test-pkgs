@@ -182,3 +182,5 @@ spec:
             secretName: gitea-inline-config
         - name: temp
           emptyDir: {}
+        - name: data
+          emptyDir: {}
