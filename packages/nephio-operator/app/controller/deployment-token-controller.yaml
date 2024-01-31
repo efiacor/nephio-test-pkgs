@@ -70,7 +70,7 @@ spec:
               apiVersion: v1
               fieldPath: status.hostIP
         - name: GIT_URL
-          value: http://gitea-http:3000
+          value: http://172.18.0.200:3000
         - name: GIT_NAMESPACE
           value: gitea
         - name: ENABLE_TOKENS
