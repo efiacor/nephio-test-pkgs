@@ -4,7 +4,7 @@ metadata:
   name: example-cluster-name
   namespace: default
 spec:
-  interval: 5m
+  interval: 60s
   path: "./"
   prune: true
   sourceRef:
