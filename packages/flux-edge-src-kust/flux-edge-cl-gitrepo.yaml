@@ -2,7 +2,7 @@ apiVersion: source.toolkit.fluxcd.io/v1
 kind: GitRepository
 metadata:
   name: example-cluster-name
-  namespace: flux-system
+  namespace: default
 spec:
   interval: 2m
   timeout: 60s
