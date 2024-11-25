@@ -4,6 +4,5 @@ metadata:
   name: kptfile.kpt.dev
   annotations:
     config.kubernetes.io/local-config: "true"
-    kustomize.toolkit.fluxcd.io/ssa: "Ignore"
 data:
   name: example

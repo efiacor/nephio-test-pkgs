@@ -3,7 +3,6 @@ kind: ConfigMap
 metadata:
   name: kptfile.kpt.dev
   annotations:
-    config.kubernetes.io/local-config: "true"
-    kustomize.toolkit.fluxcd.io/ssa: "Ignore"
+    config.kubernetes.io/local-config:
 data:
   name: example

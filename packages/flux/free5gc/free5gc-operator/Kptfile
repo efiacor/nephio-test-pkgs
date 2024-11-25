@@ -5,7 +5,30 @@ metadata:
   name: free5gc-operator
   annotations:
     config.kubernetes.io/local-config: "true"
-    kustomize.toolkit.fluxcd.io/ssa: "Ignore"
-
 info:
   description: free5GC operator package
+pipeline:
+  mutators:
+    - image: ghcr.io/kispaljr/upsert-resource:v1.1
+      configMap:
+        resources: |-
+          apiVersion: kustomize.config.k8s.io/v1beta1
+          kind: Kustomization
+          metadata:
+            annotations:
+              internal.config.kubernetes.io/path: kustomization.yaml
+          resources: []
+    - image: gcr.io/kpt-fn/starlark:v0.4.3
+      configMap:
+        source: |-
+          load("krmfn.star", "krmfn")
+          def set_values(resources):
+            kust = []
+            for r in resources:
+              if "config.kubernetes.io/local-config" not in r["metadata"]["annotations"]:
+                if not krmfn.match_gvk(r, "kustomize.config.k8s.io/v1beta1", "Kustomization"):
+                  kust.append(r["metadata"]["annotations"]["internal.config.kubernetes.io/path"])
+            for r in resources:
+              if krmfn.match_gvk(r, "kustomize.config.k8s.io/v1beta1", "Kustomization"):
+                r["resources"] = kust
+          set_values(ctx.resource_list["items"])
