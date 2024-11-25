@@ -7,6 +7,8 @@ spec:
   interval: 2m
   timeout: 60s
   url: http://172.18.0.200:3000/nephio/example-cluster-name.git
+  ignore: |
+    package-context.yaml
   ref:
     branch: main
   secretRef:
