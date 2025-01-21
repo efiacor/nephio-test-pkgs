@@ -1,0 +1,10 @@
+apiVersion: infra.nephio.org/v1alpha1
+kind: WorkloadCluster
+metadata:
+  name: workload-cluster
+  annotations:
+    config.kubernetes.io/local-config: "true"
+    kustomize.toolkit.fluxcd.io/ssa: "Ignore"
+    kpt.dev/config-injection: required
+spec:
+  clusterName: example
