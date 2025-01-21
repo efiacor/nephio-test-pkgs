@@ -4,7 +4,7 @@ metadata:
   name: pkg-upf
   annotations:
     config.kubernetes.io/local-config: "true"
-    kustomize.toolkit.fluxcd.io/ssa: "Ignore"
+    kustomize.toolkit.fluxcd.io/ssa: "ignore"
 info:
   description: example upf blueprint package
 pipeline:

@@ -4,7 +4,7 @@ metadata:
   name: free5gc-cp
   annotations:
     config.kubernetes.io/local-config: "true"
-    kustomize.toolkit.fluxcd.io/ssa: "Ignore"
+    kustomize.toolkit.fluxcd.io/ssa: "ignore"
 info:
   description: this package represents free5gc NFs, which are required to perform E2E conn testing
 pipeline:

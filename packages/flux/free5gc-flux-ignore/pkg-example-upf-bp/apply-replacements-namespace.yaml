@@ -4,7 +4,7 @@ metadata:
   name: propagate-namespace
   annotations:
     config.kubernetes.io/local-config: "true"
-    kustomize.toolkit.fluxcd.io/ssa: "Ignore"
+    kustomize.toolkit.fluxcd.io/ssa: "ignore"
 replacements:
 - source:
     kind: ConfigMap

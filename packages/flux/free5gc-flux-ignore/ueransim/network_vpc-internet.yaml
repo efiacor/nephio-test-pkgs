@@ -4,7 +4,7 @@ metadata:
   name: vpc-internet
   annotations:
     config.kubernetes.io/local-config: "true"
-    kustomize.toolkit.fluxcd.io/ssa: "Ignore"
+    kustomize.toolkit.fluxcd.io/ssa: "ignore"
 spec:
   topology: nephio
   routingTables:

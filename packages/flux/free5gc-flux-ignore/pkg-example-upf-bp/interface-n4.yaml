@@ -4,7 +4,7 @@ metadata:
   name: n4
   annotations:
     config.kubernetes.io/local-config: "true"
-    kustomize.toolkit.fluxcd.io/ssa: "Ignore"
+    kustomize.toolkit.fluxcd.io/ssa: "ignore"
     specializer.nephio.org/owner: workload.nephio.org/v1alpha1.NFDeployment.upf-example
     specializer.nephio.org/namespace: example
 spec:
