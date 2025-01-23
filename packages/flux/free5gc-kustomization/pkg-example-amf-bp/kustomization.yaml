@@ -1,0 +1,7 @@
+apiVersion: kustomize.config.k8s.io/v1beta1
+kind: Kustomization
+resources:
+- free5gc-cp/networkattachmentdefinition_amf-regional-n2.yaml
+- free5gc-cp/config_amf-regional-upf-edge01.yaml.yaml
+- free5gc-cp/config_amf-regional-upf-edge02.yaml.yaml
+- amfdeployment.yaml
