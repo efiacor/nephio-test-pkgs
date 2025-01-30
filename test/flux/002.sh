@@ -30,26 +30,10 @@ source "${LIBDIR}/kpt.sh"
 # shellcheck source=e2e/lib/porch.sh
 source "${LIBDIR}/porch.sh"
 
-# shellcheck source=e2e/lib/_assertions.sh
-source "${LIBDIR}/_assertions.sh"
+k8s_apply "$TESTDIR/002-free5gc-cp.yaml"
 
-pkg_rev=$(porchctl rpkg clone -n default "https://github.com/efiacor/nephio-test-pkgs.git/packages/flux/free5gc-gen-kustomize/free5gc-cp@$REVISION" --repository regional free5gc-cp | cut -f 1 -d ' ')
-k8s_wait_exists "packagerev" "$pkg_rev"
-
-kubectl wait --for jsonpath='{.spec.lifecycle}'=Draft packagerevisions "$pkg_rev" --timeout="600s"
-assert_branch_exists "drafts/free5gc-cp/v1" "nephio/regional"
-assert_commit_msg_in_branch "Intermediate commit" "drafts/free5gc-cp/v1" "nephio/regional"
-
-porchctl rpkg propose -n default "$pkg_rev"
-kubectl wait --for jsonpath='{.spec.lifecycle}'=Proposed packagerevisions "$pkg_rev" --timeout="600s"
-assert_branch_exists "proposed/free5gc-cp/v1" "nephio/regional"
-assert_commit_msg_in_branch "Intermediate commit" "proposed/free5gc-cp/v1" "nephio/regional"
-
-info "approving package $pkg_rev"
-porchctl rpkg approve -n default "$pkg_rev"
-info "approved package $pkg_rev"
-kubectl wait --for jsonpath='{.spec.lifecycle}'=Published packagerevisions "$pkg_rev" --timeout="600s"
-info "published package $pkg_rev"
-
+kubeconfig="$HOME/.kube/config"
+k8s_wait_exists "packagevariant" "free5gc-control-plane"
+porch_wait_published_packagerev "free5gc-cp" "regional" "$PACKAGE_REVISION"
 kpt_wait_pkg "regional" "free5gc-cp"
 k8s_wait_ready_replicas "statefulset" "mongodb" "$(k8s_get_capi_kubeconfig "regional")" "free5gc-cp"
