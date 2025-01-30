@@ -10,12 +10,4 @@ pipeline:
   mutators:
     - image: gcr.io/kpt-fn/set-namespace:v0.4.1
       configPath: package-context.yaml
-    - image: docker.io/efiacor/gen-kustomize-fn:latest
-      configMap:
-        resources: |-
-          apiVersion: kustomize.config.k8s.io/v1beta1
-          kind: Kustomization
-          metadata:
-            annotations:
-              internal.config.kubernetes.io/path: kustomization.yaml
-          resources: []
+    - image: docker.io/efiacor/gen-kustomize-res:latest
